@@ -1,0 +1,69 @@
+Problem Statement for MulticoreProcessing
+
+
+Problem Statement
+
+In the last several years CPU manufacturers have been making processors with an ever-increasing number of processing cores. Utilizing multiple cores to process workloads sometimes creates challenges for developers. When a processing workload gets split into multiple parts, there is often some performance penalty caused by having to split the work and recombine the results. For example, a job that takes 1000 ms on a single core might be expected to run in 500 ms across two cores, but in reality ends up taking 650 ms.
+
+Your team has a workload that needs to be processed. The workload requires jobLength units of computation. If we use multiple cores to process the job, the computation will be split equally among all cores. For example, if you split 1000 units of computation among 3 cores, each core will get exactly 1000/3 units of computation to perform.
+
+You have several available systems that can be used for the computation. Each system has some number of cores. All cores in a system have the same speed of computation. You need to choose a single system that will be used to process the workload, and you need to choose how many cores of that system will be used for the computation.
+
+The description of the systems you have is given in the int[]s speed and cores. For each valid i you own a system with cores[i] cores such that each of the cores can execute speed[i] units of computation per millisecond.
+
+Due to the overhead with parallelization, the computation will take additional corePenalty milliseconds for each core used beyond the first. This constant is the same for all systems you have.
+
+You are given the long jobLength, the int corePenalty, and the int[]s speed and cores. Find the best system you should use and the best number of cores you should use on that system. Return the smallest positive integer T such that it is possible to execute the entire computation in T milliseconds or less.
+
+
+Definition
+
+Class:	MulticoreProcessing
+Method:	fastestTime
+Parameters:	long, int, int[], int[]
+Returns:	long
+Method signature:	long fastestTime(long jobLength, int corePenalty, int[] speed, int[] cores)
+(be sure your method is public)
+
+
+Constraints
+-	jobLength will be between 1 and 10^18, inclusive.
+-	corePenalty will be between 0 and 1000000000, inclusive.
+-	speed will have between 1 and 50 elements, inclusive.
+-	cores will have the same number of elements as speed.
+-	Each element of speed will be between 1 and 1000000000, inclusive.
+-	Each element of cores will be between 1 and 1000000000, inclusive.
+
+Examples
+0)
+
+2000
+5
+{40,20}
+{2,4}
+Returns: 30
+The first system is twice as fast as the second one, but the first system only has two cores while the second one has four. Their raw processing power is the same, but using more cores incurs the core penalty multiple times. Thus, in this particular case it is better to use the first system. If we use both cores, each of them has to do 1000 steps of computation, and with speed 40 this will take exactly 25 milliseconds. We then add the 5-millisecond core penalty to compute that the total running time for this option is exactly 30 milliseconds.
+1)
+
+2000
+5
+{10,20}
+{2,4}
+Returns: 40
+Now, the faster machine is also the one with more cores. Even with the core penalty it's far faster overall.
+2)
+
+1000
+0
+{10}
+{3}
+Returns: 34
+We need to perform 1000 units of computation. On a system with 3 cores, each with speed 10, we will need 1000/(3*10) = 33.3333333... milliseconds of time. The correct return value is this exact value rounded up to the nearest integer: 34 milliseconds is the smallest integer amount of milliseconds sufficient for the computation.
+3)
+
+10000
+5
+{39,37,44}
+{8,16,6}
+Returns: 63
+These are roughly the specs of some current-day CPUs.
