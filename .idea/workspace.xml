@@ -4,19 +4,6 @@
     <list default="true" id="bda79b4c-8f3a-47d4-b34e-8f0a4c5fc178" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tables/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tables/Table.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Algorithms/MoveToFrontQueue1340.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Algorithms/MoveToFrontQueue1340.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/IBinaryTree/BinaryTree$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/IBinaryTree/BinaryTree$Node.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/IBinaryTree/BinaryTree$Node.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/IBinaryTree/BinaryTree.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/IBinaryTree/BinaryTree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ILinkedList/MyLinkedList.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ILinkedList/MyLinkedList.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/IMultiCoreProc/Problem.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/SortingAlgoritms/SortingTests$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/SortingAlgoritms/SortingTests$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/SortingAlgoritms/SortingTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/SortingAlgoritms/SortingTests.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TLAP/Hash23.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TLAP/LuhnCheck.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TLAP/LuhnCheck.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TopCoder/HillClimber/Problem.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TopCoder/TCPhone/Problem.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/TopCoder/IBinaryTree/BinaryTreeTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/TopCoder/IBinaryTree/BinaryTreeTest.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -47,26 +34,26 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="iml" value="2" />
-          <entry key="java" value="4" />
+          <entry key="java" value="7" />
           <entry key="xml" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="IDEA_MODULE" value="2" />
-          <entry key="JAVA" value="3" />
+          <entry key="JAVA" value="6" />
           <entry key="Scratch" value="1" />
           <entry key="XML" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="5007" />
+          <entry key="java" value="6235" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="5007" />
+          <entry key="JAVA" value="6235" />
         </counts>
       </usages-collector>
     </session>
@@ -76,50 +63,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/tables/Table.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
-              <caret line="188" column="13" lean-forward="true" selection-start-line="188" selection-start-column="13" selection-end-line="188" selection-end-column="13" />
+            <state relative-caret-position="839">
+              <caret line="298" column="9" lean-forward="true" selection-start-line="298" selection-start-column="9" selection-end-line="298" selection-end-column="9" />
               <folding>
-                <element signature="e#3858#3859#0" expanded="true" />
-                <element signature="e#3895#3896#0" expanded="true" />
-                <element signature="e#4202#4203#0" expanded="true" />
-                <element signature="e#4233#4234#0" expanded="true" />
-                <element signature="e#4305#4306#0" expanded="true" />
-                <element signature="e#4353#4354#0" expanded="true" />
-                <element signature="e#5138#5139#0" expanded="true" />
-                <element signature="e#5161#5162#0" expanded="true" />
-                <element signature="e#5921#5922#0" expanded="true" />
-                <element signature="e#5944#5945#0" expanded="true" />
-                <element signature="e#7501#7502#0" expanded="true" />
-                <element signature="e#7524#7525#0" expanded="true" />
-                <element signature="e#10252#10253#0" expanded="true" />
-                <element signature="e#10275#10276#0" expanded="true" />
-                <element signature="e#12000#12001#0" expanded="true" />
-                <element signature="e#12023#12024#0" expanded="true" />
-                <element signature="e#7682#7683#0" expanded="true" />
-                <element signature="e#7735#7736#0" expanded="true" />
-                <element signature="e#11101#11102#0" expanded="true" />
-                <element signature="e#11131#11132#0" expanded="true" />
-                <element signature="e#9874#9875#0" expanded="true" />
-                <element signature="e#9930#9931#0" expanded="true" />
+                <element signature="e#4069#4070#0" expanded="true" />
+                <element signature="e#4143#4144#0" expanded="true" />
+                <element signature="class#PrintingStyles#0;class#Table#0" />
+                <element signature="e#4808#4809#0" expanded="true" />
+                <element signature="e#4862#4863#0" expanded="true" />
+                <element signature="e#5576#5577#0" expanded="true" />
+                <element signature="e#5616#5617#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Algorithms/SmartDate.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="32">
-              <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Algorithms/TextBuffer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="3" column="29" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -218,9 +172,9 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="405" />
-    <option name="y" value="86" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="291" />
+    <option name="y" value="124" />
     <option name="width" value="1333" />
     <option name="height" value="972" />
   </component>
@@ -282,7 +236,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Goia/Desktop/Messing/Practicing/src/test/java/ITCPhone/TCPhoneHomeTest.java" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542900175165" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542911751780" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JAVA" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
@@ -476,10 +430,10 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="297" y="36" width="1333" height="972" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12953092" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19088766" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -488,8 +442,8 @@
       <window_info id="Capture Tool" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32848486" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2462039" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.37350836" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.28958786" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.37310195" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -896,13 +850,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Algorithms/SmartDate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="358">
@@ -917,6 +864,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Algorithms/SmartDate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Algorithms/TextBuffer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -926,31 +880,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/tables/Table.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="188" column="13" lean-forward="true" selection-start-line="188" selection-start-column="13" selection-end-line="188" selection-end-column="13" />
+        <state relative-caret-position="839">
+          <caret line="298" column="9" lean-forward="true" selection-start-line="298" selection-start-column="9" selection-end-line="298" selection-end-column="9" />
           <folding>
-            <element signature="e#3858#3859#0" expanded="true" />
-            <element signature="e#3895#3896#0" expanded="true" />
-            <element signature="e#4202#4203#0" expanded="true" />
-            <element signature="e#4233#4234#0" expanded="true" />
-            <element signature="e#4305#4306#0" expanded="true" />
-            <element signature="e#4353#4354#0" expanded="true" />
-            <element signature="e#5138#5139#0" expanded="true" />
-            <element signature="e#5161#5162#0" expanded="true" />
-            <element signature="e#5921#5922#0" expanded="true" />
-            <element signature="e#5944#5945#0" expanded="true" />
-            <element signature="e#7501#7502#0" expanded="true" />
-            <element signature="e#7524#7525#0" expanded="true" />
-            <element signature="e#10252#10253#0" expanded="true" />
-            <element signature="e#10275#10276#0" expanded="true" />
-            <element signature="e#12000#12001#0" expanded="true" />
-            <element signature="e#12023#12024#0" expanded="true" />
-            <element signature="e#7682#7683#0" expanded="true" />
-            <element signature="e#7735#7736#0" expanded="true" />
-            <element signature="e#11101#11102#0" expanded="true" />
-            <element signature="e#11131#11132#0" expanded="true" />
-            <element signature="e#9874#9875#0" expanded="true" />
-            <element signature="e#9930#9931#0" expanded="true" />
+            <element signature="e#4069#4070#0" expanded="true" />
+            <element signature="e#4143#4144#0" expanded="true" />
+            <element signature="class#PrintingStyles#0;class#Table#0" />
+            <element signature="e#4808#4809#0" expanded="true" />
+            <element signature="e#4862#4863#0" expanded="true" />
+            <element signature="e#5576#5577#0" expanded="true" />
+            <element signature="e#5616#5617#0" expanded="true" />
           </folding>
         </state>
       </provider>

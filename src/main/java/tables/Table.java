@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Table
 {
-
+	//Testing purposes DELETE
 	public static void main(String[] args)
 	{
 		final int side = 4;
@@ -170,50 +170,99 @@ public class Table
 
 	public void print(PrintStream pStream)
 	{
-		switch (pStyle)
-		{
-			case NO_OUTLINE:
-			{
-				new NormalPrinting(pStream).print();
-			}
-			break;
-			case OUTLINE_AROUND_EACH_CELL:
-			{
-				new AroundEachCellPrinting(pStream).print();
-			}
-			break;
-			case OUTLINE_AROUND_OUTSIDE:
-			{
-				new AroundPrinting(pStream).print();
-			}
-			break;
-			case OUTLINE_AROUND_COLUMNS:
-			{
-				new AroundEachColumnPrinting(pStream).print();
-			}
-			break;
-			case OUTLINE_AROUND_ROWS:
-			{
-				new AroundEachRowPrinting(pStream).print();
-			}
-			break;
-		}
+		new ScreenOutput(pStream).print(pStyle);
 	}
 
 	public enum PrintingStyles
 	{
-		NO_OUTLINE,
-		OUTLINE_AROUND_OUTSIDE,
-		OUTLINE_AROUND_EACH_CELL,
-		OUTLINE_AROUND_COLUMNS,
+		NO_OUTLINE
+				{
+					char getDelimiter(Delimiter delimiter)
+					{
+						return Delimiter.NO_DELIMITER.theChar;
+					}
+				},
+		OUTLINE_AROUND_OUTSIDE
+				{
+					char getDelimiter(Delimiter delimiter)
+					{
+						switch (delimiter)
+						{
+							case CROSS:
+								return Delimiter.NO_DELIMITER.theChar;
+							case TRI_TOP:
+								return Delimiter.NO_DELIMITER.theChar;
+							case TRI_RIGHT:
+								return Delimiter.NO_DELIMITER.theChar;
+							case TRI_LEFT:
+								return Delimiter.NO_DELIMITER.theChar;
+							case TRI_BOTTOM:
+								return Delimiter.NO_DELIMITER.theChar;
+							case HORIZONTAL_INSIDE:
+								return Delimiter.NO_DELIMITER.theChar;
+							case VERTICAL_INSIDE:
+								return Delimiter.NO_DELIMITER.theChar;
+							default:
+								return delimiter.theChar;
+						}
+					}
+				},
+		OUTLINE_AROUND_EACH_CELL
+				{
+					char getDelimiter(Delimiter delimiter)
+					{
+						return delimiter.theChar;
+					}
+				},
+		OUTLINE_AROUND_COLUMNS
+				{
+					char getDelimiter(Delimiter delimiter)
+					{
+						switch (delimiter)
+						{
+							case CROSS:
+								return Delimiter.NO_DELIMITER.theChar;
+							case TRI_RIGHT:
+								return Delimiter.NO_DELIMITER.theChar;
+							case TRI_LEFT:
+								return Delimiter.NO_DELIMITER.theChar;
+							case HORIZONTAL_INSIDE:
+								return Delimiter.NO_DELIMITER.theChar;
+							default:
+								return delimiter.theChar;
+						}
+					}
+				},
 		OUTLINE_AROUND_ROWS
+				{
+					char getDelimiter(Delimiter delimiter)
+					{
+						switch (delimiter)
+						{
+							case CROSS:
+								return Delimiter.NO_DELIMITER.theChar;
+							case TRI_TOP:
+								return Delimiter.NO_DELIMITER.theChar;
+							case TRI_BOTTOM:
+								return Delimiter.NO_DELIMITER.theChar;
+							case VERTICAL_INSIDE:
+								return Delimiter.NO_DELIMITER.theChar;
+							default:
+								return delimiter.theChar;
+						}
+					}
+				};
+
+		abstract char getDelimiter(Delimiter delimiter);
 	}
 
-	private enum Delimiters
+	private enum Delimiter
 	{
 		NO_DELIMITER('\u0000'),
-		VERTICAL('\u2503'),
-		HORIZONTAL('\u2501'),
+		VERTICAL_INSIDE('\u2503'),
+		VERTICAL_OUTSIDE('\u2503'),
+		HORIZONTAL_INSIDE('\u2501'),
+		HORIZONTAL_OUTSIDE('\u2501'),
 		TOP_LEFT('\u250F'),
 		TOP_RIGHT('\u2513'),
 		BOTTOM_LEFT('\u2517'),
@@ -224,24 +273,106 @@ public class Table
 		TRI_RIGHT('\u252B'),
 		TRI_BOTTOM('\u253B');
 
-		char delimiter;
+		char theChar;
 
-		Delimiters(char delimiter)
+		Delimiter(char delimiter)
 		{
-			this.delimiter = delimiter;
+			this.theChar = delimiter;
+		}
+
+		public void setTheChar(char theChar)
+		{
+			this.theChar = theChar;
 		}
 	}
 
-	abstract class Printing
+	class ScreenOutput
 	{
 		PrintStream pStream;
 
-		Printing(PrintStream pStream)
+		public ScreenOutput(PrintStream pStream)
 		{
 			this.pStream = pStream;
 		}
 
-		abstract void print();
+		void print(PrintingStyles style)
+		{
+			printTopCap(columns.size() + 1, style);
+
+			//A list with the column names and an empty string at the beginning for top left empty cell
+			List<String> OutputColumns = new ArrayList<>(columns);
+			OutputColumns.add(0, "");
+			printValuesInCells(OutputColumns, style.getDelimiter(Delimiter.VERTICAL_OUTSIDE),
+					style.getDelimiter(Delimiter.VERTICAL_OUTSIDE), whiteSpaceCharacter,
+					style.getDelimiter(Delimiter.VERTICAL_INSIDE));
+
+			for (int rowIndex = 0; rowIndex < rows.size(); rowIndex++)
+			{
+				//If an empty line between values is needed to construct the boxes print it
+				if (style == PrintingStyles.OUTLINE_AROUND_EACH_CELL || style == PrintingStyles.OUTLINE_AROUND_ROWS)
+					printEmptyCells(columns.size() + 1,
+							style.getDelimiter(Delimiter.TRI_LEFT),
+							style.getDelimiter(Delimiter.TRI_RIGHT),
+							style.getDelimiter(Delimiter.HORIZONTAL_INSIDE),
+							style.getDelimiter(Delimiter.CROSS));
+
+				//Constructs a list per row with the values and then print it on screen as cells
+				List<String> perRowValues = new ArrayList<>();
+				perRowValues.add(rows.get(rowIndex));
+
+				int startValues = columns.size() * rowIndex;
+				addIntoList(perRowValues, table, startValues, startValues + columns.size());
+
+				printValuesInCells(perRowValues, style.getDelimiter(Delimiter.VERTICAL_OUTSIDE),
+						style.getDelimiter(Delimiter.VERTICAL_OUTSIDE), whiteSpaceCharacter,
+						style.getDelimiter(Delimiter.VERTICAL_INSIDE));
+			}
+			printBottomCap(columns.size() + 1, style);
+		}
+
+		void printTopCap(int nrOfValues, PrintingStyles style)
+		{
+			printEmptyCells(nrOfValues, style.getDelimiter(Delimiter.TOP_LEFT),
+					style.getDelimiter(Delimiter.TOP_RIGHT),
+					style.getDelimiter(Delimiter.HORIZONTAL_OUTSIDE),
+					style.getDelimiter(Delimiter.TRI_TOP));
+		}
+
+		void printBottomCap(int nrOfValues, PrintingStyles style)
+		{
+			printEmptyCells(nrOfValues, style.getDelimiter(Delimiter.BOTTOM_LEFT),
+					style.getDelimiter(Delimiter.BOTTOM_RIGHT),
+					style.getDelimiter(Delimiter.HORIZONTAL_OUTSIDE),
+					style.getDelimiter(Delimiter.TRI_BOTTOM));
+		}
+
+		void printValuesInCells(List<String> values, char startC, char endC,
+								char whiteSpaceC, char horizontalCellDelimiterC)
+		{
+			printChars(1, startC);
+			for (int i = 0; i < values.size(); i++)
+			{
+				printCell(values.get(i), whiteSpaceC);
+				if (i != values.size() - 1)
+					printChars(1, horizontalCellDelimiterC);
+			}
+			printChars(1, endC);
+			printChars(1, '\n');
+		}
+
+		void printEmptyCells(int nrOfCells, char startC, char endC,
+							 char whiteSpaceC, char delimiterC)
+		{
+			printChars(1, startC);
+			for (int i = 0; i < nrOfCells; i++)
+			{
+				printCell("", whiteSpaceC);
+				if (i != nrOfCells - 1)
+					printChars(1, delimiterC);
+			}
+			printChars(1, endC);
+			printChars(1, '\n');
+		}
 
 		void printCell(String value)
 		{
@@ -262,37 +393,9 @@ public class Table
 		{
 			for (int i = 0; i < times; i++)
 			{
-				if (c != Delimiters.NO_DELIMITER.delimiter)
+				if (c != Delimiter.NO_DELIMITER.theChar)
 					pStream.print(c);
 			}
-		}
-
-		void printValuesAsCells(List<String> values, char startC, char endC,
-								char whiteSpaceC, char delimiterC)
-		{
-			printChars(1, startC);
-			for (int i = 0; i < values.size(); i++)
-			{
-				printCell(values.get(i), whiteSpaceC);
-				if (i != values.size() - 1)
-					printChars(1, delimiterC);
-			}
-			printChars(1, endC);
-			printChars(1, '\n');
-		}
-
-		void printEmptyCells(int nrOfCells, char startC, char endC,
-							 char whiteSpaceC, char delimiterC)
-		{
-			printChars(1, startC);
-			for (int i = 0; i < nrOfCells; i++)
-			{
-				printCell("", whiteSpaceC);
-				if (i != nrOfCells - 1)
-					printChars(1, delimiterC);
-			}
-			printChars(1, endC);
-			printChars(1, '\n');
 		}
 
 		<T> List<T> addIntoList(List<T> valueList, T[] valueArray, int start, int end)
@@ -307,236 +410,8 @@ public class Table
 
 			return valueList;
 		}
+
 	}
-
-	class NormalPrinting extends Printing
-	{
-
-		NormalPrinting(PrintStream pStream)
-		{
-			super(pStream);
-		}
-
-		void print()
-		{
-			printColumnNames(pStream);
-			for (int i = 0; i < rows.size(); i++)
-			{
-				String rowName = rows.get(i);
-				printCell(rowName);
-				printRowValues(pStream, i);
-			}
-		}
-
-		private void printColumnNames(PrintStream pStream)
-		{
-			//Top left empty cell
-			printCell("");
-			for (String columnName : columns)
-			{
-				printCell(columnName);
-			}
-			System.out.print("\n");
-		}
-
-		private void printRowValues(PrintStream pStream, int rowIndex)
-		{
-			int startValues = columns.size() * rowIndex;
-
-			for (int j = startValues; j < startValues + columns.size(); j++)
-			{
-				printCell(table[j]);
-			}
-			System.out.print("\n");
-		}
-	}
-
-	class AroundPrinting extends Printing
-	{
-		public AroundPrinting(PrintStream pStream)
-		{
-			super(pStream);
-		}
-
-		void print()
-		{
-			printTopCap(columns.size() + 1);
-
-			//A list with and empty string at the beginning for top left empty cell
-			List<String> OutputColumns = new ArrayList<>(columns);
-			OutputColumns.add(0, "");
-			printValuesAsCells(OutputColumns, Delimiters.VERTICAL.delimiter, Delimiters.VERTICAL.delimiter,
-					whiteSpaceCharacter, Delimiters.NO_DELIMITER.delimiter);
-
-			//Constructs a list per row with the values and then prints it on screen
-			for (int rowIndex = 0; rowIndex < rows.size(); rowIndex++)
-			{
-				List<String> perRowValues = new ArrayList<>();
-				perRowValues.add(rows.get(rowIndex));
-
-				int startValues = columns.size() * rowIndex;
-				addIntoList(perRowValues, table, startValues, startValues + columns.size());
-
-				printValuesAsCells(perRowValues, Delimiters.VERTICAL.delimiter, Delimiters.VERTICAL.delimiter,
-						whiteSpaceCharacter, Delimiters.NO_DELIMITER.delimiter);
-			}
-			printBottomCap(columns.size() + 1);
-		}
-
-		void printTopCap(int nrOfValues)
-		{
-			printEmptyCells(nrOfValues, Delimiters.TOP_LEFT.delimiter, Delimiters.TOP_RIGHT.delimiter,
-					Delimiters.HORIZONTAL.delimiter, Delimiters.NO_DELIMITER.delimiter);
-		}
-
-		void printBottomCap(int nrOfValues)
-		{
-			printEmptyCells(nrOfValues, Delimiters.BOTTOM_LEFT.delimiter, Delimiters.BOTTOM_RIGHT.delimiter,
-					Delimiters.HORIZONTAL.delimiter, Delimiters.NO_DELIMITER.delimiter);
-		}
-	}
-
-	class AroundEachCellPrinting extends Printing
-	{
-		AroundEachCellPrinting(PrintStream pStream)
-		{
-			super(pStream);
-		}
-
-		void print()
-		{
-			printTopCap(columns.size() + 1);
-
-			//A list with and empty string at the beginning for top left empty cell
-			List<String> OutputColumns = new ArrayList<>(columns);
-			OutputColumns.add(0, "");
-			printValuesAsCells(OutputColumns, Delimiters.VERTICAL.delimiter, Delimiters.VERTICAL.delimiter,
-					whiteSpaceCharacter, Delimiters.VERTICAL.delimiter);
-
-			//Constructs a list per row with the values and then prints it on screen
-			for (int rowIndex = 0; rowIndex < rows.size(); rowIndex++)
-			{
-				printEmptyCells(columns.size() + 1, Delimiters.TRI_LEFT.delimiter, Delimiters.TRI_RIGHT.delimiter,
-						Delimiters.HORIZONTAL.delimiter, Delimiters.CROSS.delimiter);
-
-				List<String> perRowValues = new ArrayList<>();
-				perRowValues.add(rows.get(rowIndex));
-
-				int startValues = columns.size() * rowIndex;
-				addIntoList(perRowValues, table, startValues, startValues + columns.size());
-
-				printValuesAsCells(perRowValues, Delimiters.VERTICAL.delimiter, Delimiters.VERTICAL.delimiter,
-						whiteSpaceCharacter, Delimiters.VERTICAL.delimiter);
-			}
-			printBottomCap(columns.size() + 1);
-		}
-
-		void printTopCap(int nrOfValues)
-		{
-			printEmptyCells(nrOfValues, Delimiters.TOP_LEFT.delimiter, Delimiters.TOP_RIGHT.delimiter,
-					Delimiters.HORIZONTAL.delimiter, Delimiters.TRI_TOP.delimiter);
-		}
-
-		void printBottomCap(int nrOfValues)
-		{
-			printEmptyCells(nrOfValues, Delimiters.BOTTOM_LEFT.delimiter, Delimiters.BOTTOM_RIGHT.delimiter,
-					Delimiters.HORIZONTAL.delimiter, Delimiters.TRI_BOTTOM.delimiter);
-		}
-	}
-
-	class AroundEachColumnPrinting extends Printing
-	{
-		AroundEachColumnPrinting(PrintStream pStream)
-		{
-			super(pStream);
-		}
-
-		void print()
-		{
-			printTopCap(columns.size() + 1);
-
-			//A list with and empty string at the beginning for top left empty cell
-			List<String> OutputColumns = new ArrayList<>(columns);
-			OutputColumns.add(0, "");
-			printValuesAsCells(OutputColumns, Delimiters.VERTICAL.delimiter, Delimiters.VERTICAL.delimiter,
-					whiteSpaceCharacter, Delimiters.VERTICAL.delimiter);
-
-			//Constructs a list per row with the values and then prints it on screen
-			for (int rowIndex = 0; rowIndex < rows.size(); rowIndex++)
-			{
-				List<String> perRowValues = new ArrayList<>();
-				perRowValues.add(rows.get(rowIndex));
-
-				int startValues = columns.size() * rowIndex;
-				addIntoList(perRowValues, table, startValues, startValues + columns.size());
-
-				printValuesAsCells(perRowValues, Delimiters.VERTICAL.delimiter, Delimiters.VERTICAL.delimiter,
-						whiteSpaceCharacter, Delimiters.VERTICAL.delimiter);
-			}
-			printBottomCap(columns.size() + 1);
-		}
-
-		void printTopCap(int nrOfValues)
-		{
-			printEmptyCells(nrOfValues, Delimiters.TOP_LEFT.delimiter, Delimiters.TOP_RIGHT.delimiter,
-					Delimiters.HORIZONTAL.delimiter, Delimiters.TRI_TOP.delimiter);
-		}
-
-		void printBottomCap(int nrOfValues)
-		{
-			printEmptyCells(nrOfValues, Delimiters.BOTTOM_LEFT.delimiter, Delimiters.BOTTOM_RIGHT.delimiter,
-					Delimiters.HORIZONTAL.delimiter, Delimiters.TRI_BOTTOM.delimiter);
-		}
-	}
-
-	class AroundEachRowPrinting extends Printing
-	{
-		AroundEachRowPrinting(PrintStream pStream)
-		{
-			super(pStream);
-		}
-
-		void print()
-		{
-			printTopCap(columns.size() + 1);
-
-			//A list with and empty string at the beginning for top left empty cell
-			List<String> OutputColumns = new ArrayList<>(columns);
-			OutputColumns.add(0, "");
-			printValuesAsCells(OutputColumns, Delimiters.VERTICAL.delimiter, Delimiters.VERTICAL.delimiter,
-					whiteSpaceCharacter, Delimiters.NO_DELIMITER.delimiter);
-
-			//Constructs a list per row with the values and then prints it on screen
-			for (int rowIndex = 0; rowIndex < rows.size(); rowIndex++)
-			{
-				printEmptyCells(columns.size() + 1, Delimiters.TRI_LEFT.delimiter, Delimiters.TRI_RIGHT.delimiter,
-						Delimiters.HORIZONTAL.delimiter, Delimiters.NO_DELIMITER.delimiter);
-
-				List<String> perRowValues = new ArrayList<>();
-				perRowValues.add(rows.get(rowIndex));
-
-				int startValues = columns.size() * rowIndex;
-				addIntoList(perRowValues, table, startValues, startValues + columns.size());
-
-				printValuesAsCells(perRowValues, Delimiters.VERTICAL.delimiter, Delimiters.VERTICAL.delimiter,
-						whiteSpaceCharacter, Delimiters.NO_DELIMITER.delimiter);
-			}
-			printBottomCap(columns.size() + 1);
-		}
-
-		void printTopCap(int nrOfValues)
-		{
-			printEmptyCells(nrOfValues, Delimiters.TOP_LEFT.delimiter, Delimiters.TOP_RIGHT.delimiter,
-					Delimiters.HORIZONTAL.delimiter, Delimiters.NO_DELIMITER.delimiter);
-		}
-
-		void printBottomCap(int nrOfValues)
-		{
-			printEmptyCells(nrOfValues, Delimiters.BOTTOM_LEFT.delimiter, Delimiters.BOTTOM_RIGHT.delimiter,
-					Delimiters.HORIZONTAL.delimiter, Delimiters.NO_DELIMITER.delimiter);
-		}
-	}
-
 
 	private void setExtraCellPadding(int extraCellPadding)
 	{
