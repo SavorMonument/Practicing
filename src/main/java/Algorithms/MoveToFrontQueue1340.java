@@ -127,7 +127,7 @@ public class MoveToFrontQueue1340 {
     }
 
     public void stdPrint(){
-        assert size() > 0 : "size is 0";
+        assert size() > 0 : "numOfNodes is 0";
 
         Node temp = start;
 

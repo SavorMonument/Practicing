@@ -54,7 +54,7 @@ public class SmartDate extends Date {
                     return false;
         }
 
-        return (year < 2018) && (year > 0) && month > 0 && month < 13 && day > 0;
+        return year < 2018 && year > 0 && month > 0 && month < 13 && day > 0;
     }
 
     private boolean isYearValid(int year) {

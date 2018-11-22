@@ -1,8 +1,7 @@
 package SortingAlgoritms;
 
-import java.sql.Array;
-import java.util.Arrays;
-import java.util.Collections;
+import tables.Table;
+
 import java.util.Comparator;
 
 public class SortingTests {
@@ -68,7 +67,7 @@ public class SortingTests {
     private static <T> void sortAndPopulate(Table table, Sorter<T> sorter){
 
         sorter.sort();
-        table.addColumn(sorter.toString());
+//        table.addColumn(sorter.toString());
         table.addElement("Nr of elem", sorter.toString(), sorter.numberOfElem());
         table.addElement("Comparisons", sorter.toString(), ((IntegerComparator)sorter.getComparator()).getCounter());
         table.addElement("Time", sorter.toString(), 0);
@@ -82,7 +81,7 @@ public class SortingTests {
                 long now = System.nanoTime();
                 sorter.sort();
                 int timeMs = (int)((now - System.nanoTime()) / 1e+6);
-                table.addColumn(sorter.toString());
+//                table.addColumn(sorter.toString());
                 table.addElement("Nr of elem", sorter.toString(), sorter.numberOfElem());
                 table.addElement("Comparisons", sorter.toString(), ((IntegerComparator)sorter.getComparator()).getCounter());
                 table.addElement("Time", sorter.toString(), timeMs + "ms");
@@ -105,10 +104,10 @@ public class SortingTests {
         int numberOfElem = 20;
         Integer[] generatedArray = generateRandomElemArray(numberOfElem, 0, 100);
 
-        Table table = new Table();
-        table.addRow("Nr of elem")
-                .addRow("Comparisons")
-                .addRow("Time");
+//        Table table = new Table();
+//        table.addRow("Nr of elem")
+//             .addRow("Comparisons")
+//             .addRow("Time");
 
 //        sortAndPopulateThreaded(table, new BubbleSort<>(getElemCopy(generatedArray), new IntegerComparator()));
 //        sortAndPopulateThreaded(table, new InsertionSort<>(getElemCopy(generatedArray), new IntegerComparator()));
@@ -116,14 +115,20 @@ public class SortingTests {
 //        sortAndPopulateThreaded(table, new QuickSort<>(getElemCopy(generatedArray), new IntegerComparator()));
 //        sortAndPopulateThreaded(table, new QuickSortMidPivot<>(getElemCopy(generatedArray), new IntegerComparator()));
 
-        Sorter<Integer> sorter = new QuickSortMidPivot<>(getElemCopy(generatedArray), new IntegerComparator());
-        Integer[] elem =  sorter.sort();
+//        Sorter<Integer> sorter = new QuickSortMidPivot<>(getElemCopy(generatedArray), new IntegerComparator());
+//        Integer[] elem =  sorter.sort();
+//
+//        for (Integer i: elem){
+//
+//            System.out.print(i + " ");
+//        }
 
-        for (Integer i: elem){
-
-            System.out.print(i + " ");
-        }
-
+//        table.addColumn("Za");
+//        table.addElement("Nr of elem", "Za", 54);
+//        table.addElement("Comparisons", "Za", 1234);
+//        table.addElement("Time", "Za", 14);
+//
+//        table.print();
 //        while (true) {
 //            if ((System.nanoTime() / 1e+9) % 2 == 0) {
 //                table.print();

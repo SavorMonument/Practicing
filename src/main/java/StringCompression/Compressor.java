@@ -50,7 +50,7 @@ public class Compressor {
             }
         }
 
-        //Trim the array to size
+        //Trim the array to numOfNodes
         char[] tempText = new char[length];
         System.arraycopy(compressedText, 0, tempText, 0, length);
 

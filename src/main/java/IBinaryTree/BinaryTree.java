@@ -1,133 +1,227 @@
 package IBinaryTree;
 
-public class BinaryTree {
+import tables.Table;
 
-    private Node head;
+import java.io.PrintStream;
+import java.util.ArrayDeque;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
-    public void addInt(int elem){
+public abstract class BinaryTree
+{
+	protected Node head;
 
-        if (null == head)
-            head = new Node().value(elem);
-        else
-            head.insert(elem);
-    }
+	abstract boolean add(int value);
 
-    public void delete(int elem){
+	public void printInOrder()
+	{
+		if (null != head)
+			head.print(System.out);
+	}
 
-        if (null != head)
-            head.delete(elem);
-    }
+	public boolean delete(int elem)
+	{
+		if (null != head)
+			return head.delete(elem);
+		else
+			return false;
+	}
 
 
-    public boolean contains(int elem){
+	public boolean contains(int elem)
+	{
+		if (null == head)
+			return false;
+		else
+			return head.contains(elem);
+	}
 
-        if (null == head)
-            return false;
-        else
-            return head.contains(elem);
-    }
+	public int height()
+	{
+		if (null == head)
+			return 0;
+		else
+			return head.height();
+	}
 
-    public void printInOrder(){
+	public int numOfNodes()
+	{
+		if (null == head)
+			return 0;
+		else
+			return head.numOfNodes();
+	}
 
-        if (null != head)
-            head.print();
+	public void printAsTree(PrintStream pStream)
+	{
+		if (null != head)
+		{
+			Table.TableBuilder builder = new Table.TableBuilder();
+			builder.setNumberedTable((int) Math.pow(2, height()) + 1, height());
+			builder.setExtraPadding(1);
 
-    }
+			Table table = builder.build();
 
-    private class Node {
+			head.fillTable(table, 0, (int) (Math.pow(2, height()) / 2));
+			table.print(pStream);
+		}
+	}
 
-        public int value;
-        public Node left;
-        public Node right;
+	abstract class Node
+	{
 
-        public Node value(int value){
-            this.value = value;
-            return this;
-        }
+		int value;
+		Node parent;
+		Node left;
+		Node right;
 
-        public void insert(int addValue){
+		Node(int value, Node parent)
+		{
+			this.value = value;
+			this.parent = parent;
+		}
 
-            if (addValue <= value){
-                if (null == left)
-                    left = new Node().value(addValue);
-                else
-                    left.insert(addValue);
-            } else
-                if (null == right)
-                    right = new Node().value(addValue);
-                else
-                    right.insert(addValue);
+		abstract boolean insert(int inputValue);
 
-        }
+		abstract boolean delete(int inputValue);
 
-        public boolean contains(int checkV){
+		void leftRotate()
+		{
+			Node temp = right.left;
 
-            if (checkV == value)
-                return true;
+			right.left = this;
+			right.parent = parent;
 
-            if ((checkV <= value) && (null != left))
-                return left.contains(checkV);
-            else
-                if (null != right)
-                    return right.contains(checkV);
+			if (null == parent)
+			{
+				head = right;
+				parent = right;
+			} else
+			{
+				if (parent.left == this)
+					parent.left = right;
+				else
+					parent.right = right;
+				parent = right;
+			}
+			right = temp;
+			if (null != temp)
+				temp.parent = this;
+		}
 
-            return false;
-        }
+		void rightRotate()
+		{
+			BinaryTree.Node temp = left.right;
 
-        public void print(){
+			left.parent = parent;
+			left.right = this;
+			if (null == parent)
+			{
+				head = left;
+				parent = left;
+			} else
+			{
+				if (parent.right == this)
+					parent.right = left;
+				else
+					parent.left = left;
 
-            if (null != left)
-                left.print();
+				parent = left;
+			}
+			left = temp;
+			if (null != temp)
+				temp.parent = this;
+		}
 
-            System.out.println(value);
+		int height()
+		{
+			int sizeLeft = 0;
+			int sizeRight = 0;
 
-            if (null != right)
-                right.print();
-        }
+			if (null != left)
+				sizeLeft += left.height();
 
-        public void delete(int deleteV){
+			if (null != right)
+				sizeRight += right.height();
 
-            if ((deleteV <= value) && (null != left)){
-                if (deleteV == left.value){
-                    if (null != left.right) {
-                        Node branch = left.left;
-                        left = left.right;
-                        left.reinsert(branch);
-                    } else{
-                        left = left.left;
-                    }
-                } else
-                    left.delete(deleteV);
-            } else
-                if (null != right){
-                    if (deleteV == right.value){
-                        if (null != right.right) {
-                            Node branch = right.left;
-                            right = right.right;
-                            right.reinsert(branch);
-                        } else {
-                            right = right.left;
-                        }
+			return Math.max(sizeLeft, sizeRight) + 1;
+		}
 
-                    }else
-                        right.delete(deleteV);
-                }
-        }
+		void print(PrintStream stream)
+		{
+			if (null != left)
+				left.print(stream);
 
-        private void reinsert(Node node){
+			stream.print(value);
 
-            if (null == node)
-                return;
+			if (null != right)
+				right.print(stream);
+		}
 
-            insert(node.value);
+		boolean contains(int inputValue)
+		{
+			if (inputValue == value)
+				return true;
+			else
+			{
+				if (inputValue < value && null != left)
+					return left.contains(inputValue);
+				else if (null != right)
+					return right.contains(inputValue);
+				else return false;
+			}
+		}
 
-            if (null != node.left){
-                reinsert(node.left);
-            }
+		int numOfNodesIterative()
+		{
+			Queue<Node> que = new LinkedList<>();
+			int size = 0;
+			Node current = this;
 
-            if (null != node.right){
-                reinsert(node.right);
-            }
-        }
-    }
+			while (null != current)
+			{
+				if (null != current.right)
+				{
+					que.add(current.right);
+					size++;
+				}
+
+				current = current.left;
+
+				if (null == current && !que.isEmpty())
+					current = que.poll();
+				else
+					size++;
+			}
+
+			return size;
+		}
+
+		int numOfNodes()
+		{
+			int size = 1;
+
+			if (null != left)
+				size += left.numOfNodes();
+
+			if (null != right)
+				size += right.numOfNodes();
+
+			return size;
+		}
+
+		void fillTable(Table table, int row, int col)
+		{
+			table.addElement(String.valueOf(row), String.valueOf(col), value);
+
+			int height = (int) Math.pow(2, Math.max(null != left ? left.height() : 0, null != right ? right.height() : 0) - 1);
+
+			if (null != left)
+				left.fillTable(table, row + 1, col - height);
+
+			if (null != right)
+				right.fillTable(table, row + 1, col + height);
+		}
+	}
 }

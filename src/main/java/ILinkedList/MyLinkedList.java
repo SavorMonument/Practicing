@@ -38,7 +38,7 @@ public class MyLinkedList<T> {
     private MyLinkedList<T> listAt(int index){
 
         if ((index < 0) || (index >= size()))
-            throw new IllegalArgumentException(String.format("Invalid index, index: %d, size: %d",
+            throw new IllegalArgumentException(String.format("Invalid index, index: %d, numOfNodes: %d",
                     index, size()));
 
         MyLinkedList<T> current = next;

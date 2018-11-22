@@ -1,6 +1,6 @@
 package TopCoder.IBinaryTree;
 
-import IBinaryTree.BinaryTree;
+import IBinaryTree.AVLBinarySearchTree;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,12 +10,12 @@ import static org.junit.Assert.assertFalse;
 
 public class BinaryTreeTest {
 
-    BinaryTree bTree;
+    AVLBinarySearchTree bTree;
 
     @Before
     public void setUp() throws Exception {
 
-        bTree = new BinaryTree();
+        bTree = new AVLBinarySearchTree();
     }
 
     @After
@@ -27,7 +27,7 @@ public class BinaryTreeTest {
     @Test
     public void addELem(){
 
-        bTree.addInt(5);
+        bTree.add(5);
 
         assertTrue (bTree.contains(5));
     }
@@ -35,8 +35,8 @@ public class BinaryTreeTest {
     @Test
     public void add2ELem(){
 
-        bTree.addInt(5);
-        bTree.addInt(2);
+        bTree.add(5);
+        bTree.add(2);
 
         assertTrue (bTree.contains(2));
     }
@@ -44,9 +44,9 @@ public class BinaryTreeTest {
     @Test
     public void add3ELem(){
 
-        bTree.addInt(5);
-        bTree.addInt(2);
-        bTree.addInt(6);
+        bTree.add(5);
+        bTree.add(2);
+        bTree.add(6);
 
         assertTrue (bTree.contains(6));
     }
@@ -54,11 +54,11 @@ public class BinaryTreeTest {
     @Test
     public void add4ELem(){
 
-        bTree.addInt(5);
-        bTree.addInt(2);
-        bTree.addInt(7);
-        bTree.addInt(1);
-        bTree.addInt(9);
+        bTree.add(5);
+        bTree.add(2);
+        bTree.add(7);
+        bTree.add(1);
+        bTree.add(9);
 
         assertTrue (bTree.contains(9));
     }
@@ -66,13 +66,13 @@ public class BinaryTreeTest {
     @Test
     public void delete(){
 
-        bTree.addInt(25);
-        bTree.addInt(30);
-        bTree.addInt(27);
-        bTree.addInt(31);
-        bTree.addInt(26);
-        bTree.addInt(29);
-        bTree.addInt(32);
+        bTree.add(25);
+        bTree.add(30);
+        bTree.add(27);
+        bTree.add(31);
+        bTree.add(26);
+        bTree.add(29);
+        bTree.add(32);
 
         bTree.delete(30);
 
@@ -83,13 +83,13 @@ public class BinaryTreeTest {
     @Test
     public void delete2(){
 
-        bTree.addInt(25);
-        bTree.addInt(13);
-        bTree.addInt(18);
-        bTree.addInt(16);
-        bTree.addInt(5);
-        bTree.addInt(3);
-        bTree.addInt(8);
+        bTree.add(25);
+        bTree.add(13);
+        bTree.add(18);
+        bTree.add(16);
+        bTree.add(5);
+        bTree.add(3);
+        bTree.add(8);
 
         bTree.delete(13);
 
