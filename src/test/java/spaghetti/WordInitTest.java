@@ -16,7 +16,7 @@ public class WordInitTest {
 		String[] expected = new String[] {"HelloMars", "HelloWorld", "HelloWorldMars", "HiHo"};
 		String[] result = test.getResult(init, prefix);
 
-		assertEquals(expected, result);
+		assertArrayEquals(expected, result);
 	}
 
 	@Test
@@ -27,7 +27,7 @@ public class WordInitTest {
 		String[] expected = new String[] {"HelloWorld", "HelloWorldMars"};
 		String[] result = test.getResult(init, prefix);
 
-		assertEquals(expected, result);
+		assertArrayEquals(expected, result);
 	}
 
 	@Test
@@ -38,7 +38,7 @@ public class WordInitTest {
 		String[] expected = new String[] {};
 		String[] result = test.getResult(init, prefix);
 
-		assertEquals(expected, result);
+		assertArrayEquals(expected, result);
 	}
 
 	@Test
@@ -49,6 +49,6 @@ public class WordInitTest {
 		String[] expected = new String[] {"HelloWorldMars"};
 		String[] result = test.getResult(init, prefix);
 
-		assertEquals(expected, result);
+		assertArrayEquals(expected, result);
 	}
 }

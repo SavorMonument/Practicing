@@ -95,7 +95,7 @@ public class SortingTests {
 
         Integer[] elem = new Integer[generatedElem.length];
         System.arraycopy(generatedElem, 0, elem, 0, generatedElem.length);
-
+        
         return elem;
     }
 
